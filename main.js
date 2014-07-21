@@ -7,7 +7,7 @@ var mapRows = 9;
 var size, tileSize;
 
 var bg = new Image();
-bg.src = "./assets/background.jpg";
+bg.src = "./assets/background.png";
 
 var fish = new Image();
 fish.src = "./assets/fish.png";
@@ -28,10 +28,13 @@ var UP = 0,
     DOWN = 2,
     LEFT = 3;
 
-var Player = function(px,  py, direction){
+var Player = function(px,  py, direction, image){
   // position on the map
   this.col = px;
   this.row = py;
+
+  this.pic = new Image();
+  this.pic.src = image;
 
   // contorl key pressed
   this.leftPressed = false;
@@ -52,53 +55,26 @@ var Player = function(px,  py, direction){
   }
 
   this.stepForward = function(map) {
-    //if(this.collisionsTesting(map)) {
-      console.log("step:" + this.direction)
-      switch(this.direction) {
-        case 0: // up
-          this.row -= 1;
-        break;
-
-        case 1: // right
-          this.col += 1;
-        break;
-
-        case 2: // down
-          this.row += 1;
-        break;
-
-        case 3: // left
-          this.col -= 1;
-        break;
-
-        default:
-          console.log("Error on Moving forward !")
-      }
-    //}
-  }
-
-  this.collisionsTesting = function(map) {
-    // return true if the direction that the play facing is walkable
+    console.log("step:" + this.direction)
     switch(this.direction) {
       case 0: // up
-        return true
+        this.row -= 1;
       break;
 
       case 1: // right
-        return true
+        this.col += 1;
       break;
 
       case 2: // down
-        return true
+        this.row += 1;
       break;
 
       case 3: // left
-        return true
+        this.col -= 1;
       break;
 
       default:
-        console.log("Error on collision test !")
-        return false;
+        console.log("Error on Moving forward !")
     }
   }
 
@@ -143,7 +119,7 @@ var map = _.map(_.range(9), function(){
 })
 
 // create first player on the map
-var orangeCat = new Player(mapCols-2, mapRows-1, UP);
+var orangeCat = new Player(mapCols-2, mapRows-1, UP, "./assets/cat_orange.png");
 document.addEventListener("keydown", function(e){
   switch(e.keyCode){
     case 65: // press a
@@ -160,7 +136,7 @@ document.addEventListener("keydown", function(e){
   }
 }, false);
 
-var purpleCat = new Player(mapCols-1, mapRows-2, LEFT);
+var purpleCat = new Player(mapCols-1, mapRows-2, LEFT, "./assets/cat_purple.png");
 document.addEventListener("keydown", function(e){
   switch(e.keyCode){
     case 37: // press left arrow
@@ -197,15 +173,26 @@ var renderMap = function() {
   //}
   
   // draw the orange cat
-  context.fillStyle = "#00ff00";
-  context.fillRect(orangeCat.col*tileSize, orangeCat.row*tileSize, 
-                    tileSize, tileSize);
-
+  context.save();
+  context.translate(orangeCat.col*tileSize + tileSize/2, 
+                    orangeCat.row*tileSize + tileSize/2)
+  context.rotate(orangeCat.direction * Math.PI / 2)
+  context.drawImage(orangeCat.pic, 
+                    -tileSize/2, 
+                    -tileSize/2, 
+                    tileSize, tileSize)
+  context.restore();
 
   // draw the purple cat
-  context.fillStyle = "#00ffff";
-  context.fillRect(purpleCat.col*tileSize, purpleCat.row*tileSize, 
-                    tileSize, tileSize);
+  context.save();
+  context.translate(purpleCat.col*tileSize + tileSize/2, 
+                    purpleCat.row*tileSize + tileSize/2)
+  context.rotate(purpleCat.direction * Math.PI / 2)
+  context.drawImage(purpleCat.pic, 
+                    -tileSize/2, 
+                    -tileSize/2, 
+                    tileSize, tileSize)
+  context.restore();
 }
 
 window.requestAnimFrame = (function(callback) {
