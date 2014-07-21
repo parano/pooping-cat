@@ -58,19 +58,27 @@ var Player = function(px,  py, direction, image){
     console.log("step:" + this.direction)
     switch(this.direction) {
       case 0: // up
-        this.row -= 1;
+        if(this.row > 0 && map[this.row-1][this.col] === 0 ) {
+          this.row -= 1;
+        }
       break;
 
       case 1: // right
-        this.col += 1;
+        if(this.col < mapCols-1 && map[this.row][this.col+1] === 0) {
+          this.col += 1;
+        }
       break;
 
       case 2: // down
-        this.row += 1;
+        if(this.row < mapRows-1 && map[this.row+1][this.col] === 0) {
+          this.row += 1;
+        }
       break;
 
       case 3: // left
-        this.col -= 1;
+        if(this.col > 0 && map[this.row][this.col-1] === 0) {
+          this.col -= 1;
+        }
       break;
 
       default:
@@ -138,22 +146,22 @@ canvas.addEventListener("mousedown", function(e){
   }
 }, false);
 
-//var map = [ // the 9x9 map - 1=not walkable, 0=empty space
-//  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-//  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-//  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-//  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-//  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-//  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-//  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-//  [0, 0, 0, 0, 0, 0, 0, 0, 0],
-//  [0, 0, 0, 0, 0, 0, 0, 0, 0]
-//]; 
+var map = [ // the 9x9 map - 1=not walkable, 0=empty space
+  [1, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0]
+]; 
 
 // create an empty map, 9*9 fill with 0s
-var map = _.map(_.range(9), function(){ 
-  return _.map(_.range(9), function(){ return 0;});
-})
+//var map = _.map(_.range(9), function(){ 
+//  return _.map(_.range(9), function(){ return 0;});
+//})
 
 // create first player on the map
 var orangeCat = new Player(mapCols-2, 
