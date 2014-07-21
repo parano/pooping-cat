@@ -19,8 +19,8 @@ window.onload = window.onresize = function() {
     height: window.innerHeight || document.body.clientHeight
   }
   tileSize = size.height / mapRows;
-  canvas.width = tileSize * mapCols;
-  canvas.height = tileSize * mapRows;
+  canvas.width = size.height;
+  canvas.height = size.height;
 }
 
 var UP = 0,
@@ -46,12 +46,12 @@ var Player = function(px,  py, direction, image){
 
   this.turnLeft = function() {
     this.direction = (this.direction + 3 ) % 4
-    console.log("Turnning Left, Current direction: " + this.direction)
+    //console.log("Turnning Left, Current direction: " + this.direction)
   }
 
   this.turnRight = function() {
     this.direction = (this.direction + 1) % 4
-    console.log("Turnning Right, Current direction: " + this.direction)
+    //console.log("Turnning Right, Current direction: " + this.direction)
   }
 
   this.stepForward = function(map) {
@@ -97,7 +97,7 @@ var Player = function(px,  py, direction, image){
       this.turnRight();
     } else if (this.movePressed) {
       // move forward 1 step
-      console.log("move forward")
+      //console.log("move forward")
       this.movePressed = false;
       this.stepForward(map);
     }
@@ -146,7 +146,7 @@ canvas.addEventListener("mousedown", function(e){
   }
 }, false);
 
-var map = [ // the 9x9 map - 1=not walkable, 0=empty space
+var map = [  //the 9x9 map - 1=not walkable, 0=empty space
   [1, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0],
