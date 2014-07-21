@@ -9,6 +9,9 @@ var size, tileSize;
 var bg = new Image();
 bg.src = "./assets/background.jpg";
 
+var fish = new Image();
+fish.src = "./assets/fish.png";
+
 // resize the map after user resize the window
 window.onload = window.onresize = function() {
     size = {
@@ -182,6 +185,7 @@ var renderMap = function() {
   // clear the canvas
   context.clearRect(0, 0, canvas.width, canvas.height);
   context.drawImage(bg, 0, 0, canvas.width, canvas.height);
+  context.drawImage(fish, 0, 0, tileSize, tileSize);
 
 
   // draw the grids
