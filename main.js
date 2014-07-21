@@ -1,8 +1,13 @@
 var canvas = document.getElementById("canvas");
 var context = canvas.getContext("2d");
+var size = {
+  width: window.innerWidth || document.body.clientWidth,
+  height: window.innerHeight || document.body.clientHeight
+}
+
 var mapCols = 9;
 var mapRows = 9;
-var tileSize = 50;
+var tileSize = size.height / mapRows;
 
 canvas.width = tileSize * mapCols;
 canvas.height = tileSize * mapRows;
@@ -27,14 +32,17 @@ var Player = function(px,  py, direction){
 
   this.turnLeft = function() {
     this.direction = (this.direction + 3 ) % 4
+    console.log("Turnning Left, Current direction: " + this.direction)
   }
 
   this.turnRight = function() {
     this.direction = (this.direction + 1) % 4
+    console.log("Turnning Right, Current direction: " + this.direction)
   }
 
   this.stepForward = function(map) {
     //if(this.collisionsTesting(map)) {
+      console.log("step:" + this.direction)
       switch(this.direction) {
         case 0: // up
           this.row -= 1;
@@ -86,16 +94,17 @@ var Player = function(px,  py, direction){
   this.update = function() {
     if(this.leftPressed) {
       // rotate left
-      leftPressed = false;
+      this.leftPressed = false;
       this.turnLeft();
     } else if (this.rightPressed) {
       // rotate right
-      rightPressed = false;
+      this.rightPressed = false;
       this.turnRight();
     } else if (this.movePressed) {
       // move forward 1 step
-      movePressed = false;
-      this.stepForward();
+      console.log("move forward")
+      this.movePressed = false;
+      this.stepForward(map);
     }
   }
 }
@@ -123,7 +132,7 @@ var map = _.map(_.range(9), function(){
 })
 
 // create first player on the map
-var orangeCat = new Player(mapCols-1, mapRows-1, UP);
+var orangeCat = new Player(mapCols-2, mapRows-1, UP);
 document.addEventListener("keydown", function(e){
   switch(e.keyCode){
     case 65: // press a
@@ -136,6 +145,23 @@ document.addEventListener("keydown", function(e){
 
     case 68: // press d
       orangeCat.rightPressed=true;
+    break;
+  }
+}, false);
+
+var purpleCat = new Player(mapCols-1, mapRows-2, LEFT);
+document.addEventListener("keydown", function(e){
+  switch(e.keyCode){
+    case 37: // press left arrow
+      purpleCat.leftPressed=true;
+    break;
+
+    case 38: //press up arrow
+      purpleCat.movePressed=true;
+    break;
+
+    case 39: // press right arrow
+      purpleCat.rightPressed=true;
     break;
   }
 }, false);
@@ -160,6 +186,12 @@ var renderMap = function() {
   context.fillStyle = "#00ff00";
   context.fillRect(orangeCat.col*tileSize, orangeCat.row*tileSize, 
                     tileSize, tileSize);
+
+
+  // draw the purple cat
+  context.fillStyle = "#00ffff";
+  context.fillRect(purpleCat.col*tileSize, purpleCat.row*tileSize, 
+                    tileSize, tileSize);
 }
 
 window.requestAnimFrame = (function(callback) {
@@ -174,6 +206,7 @@ window.requestAnimFrame = (function(callback) {
 
 var updateGame = function() {
   orangeCat.update();
+  purpleCat.update();
 
   renderMap();
 
