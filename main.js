@@ -14,13 +14,13 @@ fish.src = "./assets/fish.png";
 
 // resize the map after user resize the window
 window.onload = window.onresize = function() {
-    size = {
-      width: window.innerWidth || document.body.clientWidth,
-      height: window.innerHeight || document.body.clientHeight
-    }
-    tileSize = size.height / mapRows;
-    canvas.width = tileSize * mapCols;
-    canvas.height = tileSize * mapRows;
+  size = {
+    width: window.innerWidth || document.body.clientWidth,
+    height: window.innerHeight || document.body.clientHeight
+  }
+  tileSize = size.height / mapRows;
+  canvas.width = tileSize * mapCols;
+  canvas.height = tileSize * mapRows;
 }
 
 var UP = 0,
@@ -99,7 +99,44 @@ var Player = function(px,  py, direction, image){
 var Obstacle = function(px, py) {
   this.col = px;
   this.row = py;
+  this.pic = new Image();
+  this.pic.src = "./assets/poop.png"
 }
+
+// list of obstacles on the map
+var obstacles = [];
+
+var addObstacle = function(px, py) {
+  if(map[py][px] === 0){
+    map[py][px] = 1;
+    obstacles.push(new Obstacle(px, py));
+  }
+}
+
+var removeObstacle = function(px, py) {
+  obstacles = _.reject(obstacles, function(o){
+    return o.col === px && o.row === py;
+  })
+}
+
+canvas.addEventListener("mousedown", function(e){
+  console.log("mousedown");
+  var x = Math.floor((e.x - canvas.offsetLeft) / tileSize);
+  var y = Math.floor((e.y - canvas.offsetTop) / tileSize);
+
+  // testing mousedown event
+  //context.fillStyle = "rgb(144,144,144)";
+  //context.fillRect(x*tileSize, y*tileSize, tileSize, tileSize);
+  //alert("x:" + x + " y:" + y);
+  
+  // add or remove obstacle
+  if(map[y][x] === 0) {
+    addObstacle(x, y);
+  } else {
+    removeObstacle(x, y);
+    map[y][x] = 0;
+  }
+}, false);
 
 //var map = [ // the 9x9 map - 1=not walkable, 0=empty space
 //  [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -119,7 +156,11 @@ var map = _.map(_.range(9), function(){
 })
 
 // create first player on the map
-var orangeCat = new Player(mapCols-2, mapRows-1, UP, "./assets/cat_orange.png");
+var orangeCat = new Player(mapCols-2, 
+                           mapRows-1, 
+                           UP, 
+                           "./assets/cat_orange.png");
+
 document.addEventListener("keydown", function(e){
   switch(e.keyCode){
     case 65: // press a
@@ -136,7 +177,11 @@ document.addEventListener("keydown", function(e){
   }
 }, false);
 
-var purpleCat = new Player(mapCols-1, mapRows-2, LEFT, "./assets/cat_purple.png");
+var purpleCat = new Player(mapCols-1, 
+                           mapRows-2, 
+                           LEFT, 
+                           "./assets/cat_purple.png");
+
 document.addEventListener("keydown", function(e){
   switch(e.keyCode){
     case 37: // press left arrow
@@ -153,9 +198,6 @@ document.addEventListener("keydown", function(e){
   }
 }, false);
 
-// list of obstacles on the map
-var obstacles = [];
-
 
 var renderMap = function() {
   // clear the canvas
@@ -163,15 +205,6 @@ var renderMap = function() {
   context.drawImage(bg, 0, 0, canvas.width, canvas.height);
   context.drawImage(fish, 0, 0, tileSize, tileSize);
 
-
-  // draw the grids
-  //context.strokeStyle = "#ff0000";
-  //for(var i=0; i<mapRows; i++) {
-  //  for(var j=0; j<mapCols; j++) {
-  //    context.strokeRect(j*tileSize,i*tileSize,tileSize,tileSize); 
-  //  }
-  //}
-  
   // draw the orange cat
   context.save();
   context.translate(orangeCat.col*tileSize + tileSize/2, 
@@ -193,6 +226,15 @@ var renderMap = function() {
                     -tileSize/2, 
                     tileSize, tileSize)
   context.restore();
+
+
+  // draw the poops
+  _.each(obstacles, function(obstacle){
+    context.drawImage(obstacle.pic,
+                     obstacle.col*tileSize,
+                     obstacle.row*tileSize,
+                     tileSize, tileSize)
+  });
 }
 
 window.requestAnimFrame = (function(callback) {
@@ -203,7 +245,6 @@ window.requestAnimFrame = (function(callback) {
       window.setTimeout(callback, 1000/60);
     };
 })();
-
 
 var updateGame = function() {
   orangeCat.update();
