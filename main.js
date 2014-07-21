@@ -1,16 +1,20 @@
 var canvas = document.getElementById("canvas");
 var context = canvas.getContext("2d");
-var size = {
-  width: window.innerWidth || document.body.clientWidth,
-  height: window.innerHeight || document.body.clientHeight
-}
 
 var mapCols = 9;
 var mapRows = 9;
-var tileSize = size.height / mapRows;
 
-canvas.width = tileSize * mapCols;
-canvas.height = tileSize * mapRows;
+var size, tileSize;
+
+window.onload = window.onresize = function() {
+    size = {
+      width: window.innerWidth || document.body.clientWidth,
+      height: window.innerHeight || document.body.clientHeight
+    }
+    tileSize = size.height / mapRows;
+    canvas.width = tileSize * mapCols;
+    canvas.height = tileSize * mapRows;
+}
 
 var UP = 0,
     RIGHT = 1,
