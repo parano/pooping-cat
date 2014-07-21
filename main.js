@@ -6,6 +6,10 @@ var mapRows = 9;
 
 var size, tileSize;
 
+var bg = new Image();
+bg.src = "./assets/background.jpg";
+
+// resize the map after user resize the window
 window.onload = window.onresize = function() {
     size = {
       width: window.innerWidth || document.body.clientWidth,
@@ -177,14 +181,16 @@ var obstacles = [];
 var renderMap = function() {
   // clear the canvas
   context.clearRect(0, 0, canvas.width, canvas.height);
+  context.drawImage(bg, 0, 0, canvas.width, canvas.height);
+
 
   // draw the grids
-  context.strokeStyle = "#ff0000";
-  for(var i=0; i<mapRows; i++) {
-    for(var j=0; j<mapCols; j++) {
-      context.strokeRect(j*tileSize,i*tileSize,tileSize,tileSize); 
-    }
-  }
+  //context.strokeStyle = "#ff0000";
+  //for(var i=0; i<mapRows; i++) {
+  //  for(var j=0; j<mapCols; j++) {
+  //    context.strokeRect(j*tileSize,i*tileSize,tileSize,tileSize); 
+  //  }
+  //}
   
   // draw the orange cat
   context.fillStyle = "#00ff00";
