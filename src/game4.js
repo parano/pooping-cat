@@ -1,5 +1,3 @@
-// Two Player Mode
-
 var fish = new Image();
 fish.src = "./assets/fish.png";
 
@@ -29,11 +27,6 @@ document.addEventListener("keydown", function(e){
     case 68: // press d
       orangeCat.rightPressed=true;
     break;
-
-    case 83: // press s
-      console.log("s");
-      orangeCat.removeObstaclePressed=true;
-    break;
   }
 }, false);
 
@@ -54,11 +47,6 @@ document.addEventListener("keydown", function(e){
 
     case 39: // press right arrow
       purpleCat.rightPressed=true;
-    break;
-
-    case 40: // press down arrow
-      console.log("down");
-      purpleCat.removeObstaclePressed=true;
     break;
   }
 }, false);

@@ -30,7 +30,6 @@ canvas.addEventListener("mousedown", function(e){
     addObstacle(x, y);
   } else {
     removeObstacle(x, y);
-    map[y][x] = 0;
   }
 }, false);
 
@@ -44,7 +43,9 @@ var addObstacle = function(px, py) {
 var removeObstacle = function(px, py) {
   obstacles = _.reject(obstacles, function(o){
     return o.col === px && o.row === py;
-  })
+  });
+
+  map[py][px] = 0;
 }
 
 var map = [  //the 9x9 map - 1=not walkable, 0=empty space
