@@ -88,10 +88,12 @@ var Player = function(px,  py, direction, image){
     console.log("moveup");
 
     if(this.row > 0){
-      if (map[this.row-1][this.col] === 0) {
+      if (map[this.row-1][this.col] === 0 || map[this.row-1][this.col] === 3) {
         map[this.row][this.col] = 0;
         this.row -= 1;
-        map[this.row][this.col] = 2;
+        if(map[this.row][this.col] !== 3) {
+          map[this.row][this.col] = 2;
+        }
         return true;
       } else if(map[this.row-1][this.col] === 2){
         // find the cat that are infront
@@ -124,10 +126,12 @@ var Player = function(px,  py, direction, image){
     console.log("moveDown");
 
     if(this.row < mapRows-1){
-      if(map[this.row+1][this.col] === 0) {
+      if(map[this.row+1][this.col] === 0 || map[this.row+1][this.col] === 3) {
         map[this.row][this.col] = 0;
         this.row += 1;
-        map[this.row][this.col] = 2;
+        if(map[this.row][this.col] !== 3) {
+          map[this.row][this.col] = 2;
+        }
         return true;
       } else if(map[this.row+1][this.col] === 2){
         // find the cat that are infront
@@ -160,10 +164,12 @@ var Player = function(px,  py, direction, image){
     console.log("moveLeft");
 
     if(this.col > 0){
-      if (map[this.row][this.col-1] === 0) {
+      if (map[this.row][this.col-1] === 0 || map[this.row][this.col-1] === 3) {
         map[this.row][this.col] = 0;
         this.col -= 1;
-        map[this.row][this.col] = 2;
+        if(map[this.row][this.col] !== 3) {
+          map[this.row][this.col] = 2;
+        }
         return true;
       } else if(map[this.row][this.col-1] === 2){
         // find the cat that are infront
@@ -196,10 +202,12 @@ var Player = function(px,  py, direction, image){
     console.log("moveRight");
 
     if(this.col < mapCols-1){
-      if (map[this.row][this.col+1] === 0) {
+      if (map[this.row][this.col+1] === 0 || map[this.row][this.col+1] === 3) {
         map[this.row][this.col] = 0;
         this.col += 1;
-        map[this.row][this.col] = 2;
+        if(map[this.row][this.col] !== 3) {
+          map[this.row][this.col] = 2;
+        }
         return true;
       } else if(map[this.row][this.col+1] === 2){
         // find the cat that are infront
