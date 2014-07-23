@@ -9,19 +9,23 @@ window.onload = window.onresize = function() {
     width: window.innerWidth || document.body.clientWidth,
     height: window.innerHeight || document.body.clientHeight
   }
-  tileSize = size.height / mapRows;
+
   canvas.width = size.width;
   canvas.height = size.height;
 
+  offsetX = (canvas.width - canvas.height) / 2
+  offsetY = 20;
+
+  tileSize = (canvas.height - 2*offsetY) / mapRows;
+
   // ipad resolution 0.75
-  offsetX = (size.width - size.height) / 2
-  offsetY = 0;
+  
 }
 
 var renderMap = function() {
   // clear the canvas
   context.clearRect(offsetX, offsetY, canvas.width, canvas.height);
-  context.drawImage(bg, offsetX, offsetY, canvas.height, canvas.height);
+  context.drawImage(bg, offsetX, offsetY, canvas.height-2*offsetY, canvas.height-2*offsetY);
   context.drawImage(fish, offsetX, offsetY, tileSize, tileSize);
 
   // draw the orange cat
