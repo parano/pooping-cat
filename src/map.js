@@ -47,8 +47,8 @@ var removeObstacle = function(px, py) {
   map[py][px] = 0;
 }
 
-var map = [  //the 9x9 map - 1=Obstacle, 0=Empty, 2=Player
-  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+var map = [  //the 9x9 map - 1=Obstacle, 0=Empty, 2=Player, 3=win
+  [3, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0],

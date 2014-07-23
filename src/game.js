@@ -9,6 +9,7 @@ bg.src = "./assets/background.png";
 // list of obstacles on the map
 var obstacles = [];
 var cats = [];
+var prompts = [];
 
 // create first player on the map
 var orangeCat = new Player(mapCols-2, 
@@ -36,6 +37,9 @@ document.addEventListener("keydown", function(e){
     break;
   }
 }, false);
+
+var orangePrompt = new Prompt(0,0,300,400);
+prompts.push(orangePrompt);
 
 var purpleCat = new Player(mapCols-1, 
                            mapRows-2, 

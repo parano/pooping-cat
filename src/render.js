@@ -30,12 +30,12 @@ var renderMap = function() {
   _.each(cats, function(cat){
     context.save();
     context.translate(offsetX + cat.col*tileSize + tileSize/2, 
-                      offsetY + cat.row*tileSize + tileSize/2)
+                      offsetY + cat.row*tileSize + tileSize/2);
     context.rotate(cat.direction * Math.PI / 2)
     context.drawImage(cat.pic, 
                       -tileSize/2, 
                       -tileSize/2, 
-                      tileSize, tileSize)
+                      tileSize, tileSize);
     context.restore();
   });
 
@@ -44,8 +44,13 @@ var renderMap = function() {
     context.drawImage(obstacle.pic,
                      offsetX + obstacle.col*tileSize,
                      offsetY + obstacle.row*tileSize,
-                     tileSize, tileSize)
+                     tileSize, tileSize);
   });
+
+  // draw prompts
+  _.each(prompts, function(prompt){
+    prompt.draw(context);
+  })
 }
 
 window.requestAnimFrame = (function(callback) {
