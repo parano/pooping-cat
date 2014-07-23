@@ -88,25 +88,5 @@ var Player = function(px,  py, direction, image){
         console.log("Error on Removing Obstacle !")
     }
   }
-
-  this.update = function() {
-    if(this.leftPressed) {
-      // rotate left
-      this.leftPressed = false;
-      this.turnLeft();
-    } else if (this.rightPressed) {
-      // rotate right
-      this.rightPressed = false;
-      this.turnRight();
-    } else if (this.movePressed) {
-      // move forward 1 step
-      //console.log("move forward")
-      this.movePressed = false;
-      this.stepForward(map);
-    } else if (this.removeObstaclePressed) {
-      this.removeObstaclePressed = false;
-      this.removeObstacle(map)
-    }
-  }
 }
 

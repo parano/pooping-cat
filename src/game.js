@@ -19,20 +19,19 @@ var orangeCat = new Player(mapCols-2,
 document.addEventListener("keydown", function(e){
   switch(e.keyCode){
     case 65: // press a
-      orangeCat.leftPressed=true;
+      orangeCat.turnLeft();
     break;
 
     case 87: //press w
-      orangeCat.movePressed=true;
+      orangeCat.stepForward(map);
     break;
 
     case 68: // press d
-      orangeCat.rightPressed=true;
+      orangeCat.turnRight();
     break;
 
     case 83: // press s
-      console.log("s");
-      orangeCat.removeObstaclePressed=true;
+      orangeCat.removeObstacle(map);
     break;
   }
 }, false);
@@ -45,30 +44,24 @@ var purpleCat = new Player(mapCols-1,
 document.addEventListener("keydown", function(e){
   switch(e.keyCode){
     case 37: // press left arrow
-      purpleCat.leftPressed=true;
+      purpleCat.turnLeft();
     break;
 
     case 38: //press up arrow
-      purpleCat.movePressed=true;
+      purpleCat.stepForward(map);
     break;
 
     case 39: // press right arrow
-      purpleCat.rightPressed=true;
+      purpleCat.turnRight();
     break;
 
     case 40: // press down arrow
-      console.log("down");
-      purpleCat.removeObstaclePressed=true;
+      purpleCat.removeObstacle(map);
     break;
   }
 }, false);
 
-
-
 var updateGame = function() {
-  orangeCat.update();
-  purpleCat.update();
-
   renderMap();
 
   requestAnimationFrame(function() {

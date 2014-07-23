@@ -17,8 +17,8 @@ var Obstacle = function(px, py) {
 
 canvas.addEventListener("mousedown", function(e){
   console.log("mousedown");
-  var x = Math.floor((e.x - canvas.offsetLeft) / tileSize);
-  var y = Math.floor((e.y - canvas.offsetTop) / tileSize);
+  var x = Math.floor((e.x - canvas.offsetLeft - offsetX) / tileSize);
+  var y = Math.floor((e.y - canvas.offsetTop - offsetY) / tileSize);
 
   // testing mousedown event
   //context.fillStyle = "rgb(144,144,144)";

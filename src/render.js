@@ -1,6 +1,8 @@
 var canvas = document.getElementById("canvas");
 var context = canvas.getContext("2d");
 
+var offsetX, offsetY;
+
 // resize the map after user resize the window
 window.onload = window.onresize = function() {
   size = {
@@ -8,20 +10,24 @@ window.onload = window.onresize = function() {
     height: window.innerHeight || document.body.clientHeight
   }
   tileSize = size.height / mapRows;
-  canvas.width = size.height;
+  canvas.width = size.width;
   canvas.height = size.height;
+
+  // ipad resolution 0.75
+  offsetX = (size.width - size.height) / 2
+  offsetY = 0;
 }
 
 var renderMap = function() {
   // clear the canvas
-  context.clearRect(0, 0, canvas.width, canvas.height);
-  context.drawImage(bg, 0, 0, canvas.width, canvas.height);
-  context.drawImage(fish, 0, 0, tileSize, tileSize);
+  context.clearRect(offsetX, offsetY, canvas.width, canvas.height);
+  context.drawImage(bg, offsetX, offsetY, canvas.height, canvas.height);
+  context.drawImage(fish, offsetX, offsetY, tileSize, tileSize);
 
   // draw the orange cat
   context.save();
-  context.translate(orangeCat.col*tileSize + tileSize/2, 
-                    orangeCat.row*tileSize + tileSize/2)
+  context.translate(offsetX + orangeCat.col*tileSize + tileSize/2, 
+                    offsetY + orangeCat.row*tileSize + tileSize/2)
   context.rotate(orangeCat.direction * Math.PI / 2)
   context.drawImage(orangeCat.pic, 
                     -tileSize/2, 
@@ -31,8 +37,8 @@ var renderMap = function() {
 
   // draw the purple cat
   context.save();
-  context.translate(purpleCat.col*tileSize + tileSize/2, 
-                    purpleCat.row*tileSize + tileSize/2)
+  context.translate(offsetX + purpleCat.col*tileSize + tileSize/2, 
+                    offsetY + purpleCat.row*tileSize + tileSize/2)
   context.rotate(purpleCat.direction * Math.PI / 2)
   context.drawImage(purpleCat.pic, 
                     -tileSize/2, 
@@ -40,12 +46,11 @@ var renderMap = function() {
                     tileSize, tileSize)
   context.restore();
 
-
   // draw the poops
   _.each(obstacles, function(obstacle){
     context.drawImage(obstacle.pic,
-                     obstacle.col*tileSize,
-                     obstacle.row*tileSize,
+                     offsetX + obstacle.col*tileSize,
+                     offsetY + obstacle.row*tileSize,
                      tileSize, tileSize)
   });
 }
@@ -60,9 +65,6 @@ window.requestAnimFrame = (function(callback) {
 })();
 
 var updateGame = function() {
-  orangeCat.update();
-  purpleCat.update();
-
   renderMap();
 
   requestAnimationFrame(function() {
