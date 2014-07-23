@@ -27,34 +27,26 @@ var Player = function(px,  py, direction, image){
   }
 
   this.stepForward = function(map) {
-    console.log("step:" + this.direction)
+    //console.log("step:" + this.direction)
     switch(this.direction) {
       case 0: // up
-        if(this.row > 0 && map[this.row-1][this.col] === 0 ) {
-          this.moveUp();
-        }
+        this.moveUp();
       break;
 
       case 1: // right
-        if(this.col < mapCols-1 && map[this.row][this.col+1] === 0) {
-          this.moveRight();
-        }
+        this.moveRight();
       break;
 
       case 2: // down
-        if(this.row < mapRows-1 && map[this.row+1][this.col] === 0) {
-          this.moveDown();
-        }
+        this.moveDown();
       break;
 
       case 3: // left
-        if(this.col > 0 && map[this.row][this.col-1] === 0) {
-          this.moveLeft();
-        }
+        this.moveLeft();
       break;
 
       default:
-        console.log("Error on Moving forward !")
+        console.log("error on moving forward !")
     }
   }
 
@@ -91,27 +83,151 @@ var Player = function(px,  py, direction, image){
   }
 
   this.moveUp = function(){
-    map[this.row][this.col] = 0;
-    this.row -= 1;
-    map[this.row][this.col] = 2;
+    var ahead_row = this.row-1;
+    var ahead_col = this.col;
+    console.log("moveup");
+
+    if(this.row > 0){
+      if (map[this.row-1][this.col] === 0 ) {
+        map[this.row][this.col] = 0;
+        this.row -= 1;
+        map[this.row][this.col] = 2;
+        return true;
+      } else if(map[this.row-1][this.col] === 2){
+        // find the cat that are infront
+        console.log("finding cat ahead");
+        player_ahead = _.find(cats, function(player){
+          console.log(ahead_row);
+          console.log(ahead_col);
+          return player.row === ahead_row && player.col === ahead_col;
+        });
+
+        if(player_ahead !== undefined && player_ahead.moveUp()) {
+          map[this.row][this.col] = 0;
+          this.row -= 1;
+          map[this.row][this.col] = 2;
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
   }
   
   this.moveDown = function(){
-    map[this.row][this.col] = 0;
-    this.row += 1;
-    map[this.row][this.col] = 2;
+    var ahead_row = this.row+1;
+    var ahead_col = this.col;
+    console.log("moveDown");
+
+    if(this.row < mapRows-1){
+      if(map[this.row+1][this.col] === 0) {
+        map[this.row][this.col] = 0;
+        this.row += 1;
+        map[this.row][this.col] = 2;
+        return true;
+      } else if(map[this.row+1][this.col] === 2){
+        // find the cat that are infront
+        console.log("finding cat ahead");
+        player_ahead = _.find(cats, function(player){
+          console.log(ahead_row);
+          console.log(ahead_col);
+          return player.row === ahead_row && player.col === ahead_col;
+        });
+
+        if(player_ahead !== undefined && player_ahead.moveDown()) {
+          map[this.row][this.col] = 0;
+          this.row += 1;
+          map[this.row][this.col] = 2;
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    } else { 
+      return false;
+    }
   }
   
   this.moveLeft = function(){
-    map[this.row][this.col] = 0;
-    this.col -= 1;
-    map[this.row][this.col] = 2;
+    var ahead_row = this.row;
+    var ahead_col = this.col-1;
+    console.log("moveLeft");
+
+    if(this.col > 0){
+      if (map[this.row][this.col-1] === 0 ) {
+        map[this.row][this.col] = 0;
+        this.col -= 1;
+        map[this.row][this.col] = 2;
+        return true;
+      } else if(map[this.row][this.col-1] === 2){
+        // find the cat that are infront
+        console.log("finding cat ahead");
+        player_ahead = _.find(cats, function(player){
+          console.log(ahead_row);
+          console.log(ahead_col);
+          return player.row === ahead_row && player.col === ahead_col;
+        });
+
+        if(player_ahead !== undefined && player_ahead.moveLeft()) {
+          map[this.row][this.col] = 0;
+          this.col -= 1;
+          map[this.row][this.col] = 2;
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
   }
 
   this.moveRight = function(){
-    map[this.row][this.col] = 0;
-    this.col += 1;
-    map[this.row][this.col] = 2;
+    var ahead_row = this.row;
+    var ahead_col = this.col+1;
+    console.log("moveRight");
+
+    if(this.col < mapCols-1){
+      if (map[this.row][this.col+1] === 0 ) {
+        map[this.row][this.col] = 0;
+        this.col += 1;
+        map[this.row][this.col] = 2;
+        return true;
+      } else if(map[this.row][this.col+1] === 2){
+        // find the cat that are infront
+        console.log("finding cat ahead");
+        player_ahead = _.find(cats, function(player){
+          console.log(ahead_row);
+          console.log(ahead_col);
+          return player.row === ahead_row && player.col === ahead_col;
+        });
+
+        if(player_ahead !== undefined && player_ahead.moveRight()) {
+          map[this.row][this.col] = 0;
+          this.col += 1;
+          map[this.row][this.col] = 2;
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+
+    //map[this.row][this.col] = 0;
+    //this.col += 1;
+    //map[this.row][this.col] = 2;
   }
 }
 
