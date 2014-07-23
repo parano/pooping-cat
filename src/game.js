@@ -38,7 +38,11 @@ document.addEventListener("keydown", function(e){
   }
 }, false);
 
-var orangePrompt = new Prompt(0,0,300,400);
+var orangePrompt = new Prompt("0",
+                              "(canvas.height - offsetX*2)/2",
+                              "offsetX",
+                              "offsetX * 2",
+                              "./assets/prompts/orange/orange");
 prompts.push(orangePrompt);
 
 var purpleCat = new Player(mapCols-1, 
@@ -66,6 +70,16 @@ document.addEventListener("keydown", function(e){
     break;
   }
 }, false);
+
+var purplePrompt = new Prompt("(canvas.height + offsetX)",
+                              "(canvas.height - offsetX*2)/2",
+                              "offsetX",
+                              "offsetX * 2",
+                              "./assets/prompts/purple/purple");
+prompts.push(purplePrompt);
+
+//var purplePrompt = new Prompt(0,0,300,400);
+//prompts.push(purplePrompt);
 
 var updateGame = function() {
   renderMap();

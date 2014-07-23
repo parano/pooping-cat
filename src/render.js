@@ -15,14 +15,14 @@ window.onload = window.onresize = function() {
   canvas.height = size.height;
 
   offsetX = (canvas.width - canvas.height) / 2
-  offsetY = 20;
+  offsetY = 0;
 
   tileSize = (canvas.height - 2*offsetY) / mapRows;
 }
 
 var renderMap = function() {
   // clear the canvas
-  context.clearRect(offsetX, offsetY, canvas.width, canvas.height);
+  context.clearRect(0, 0, canvas.width, canvas.height);
   context.drawImage(bg, offsetX, offsetY, canvas.height-2*offsetY, canvas.height-2*offsetY);
   context.drawImage(fish, offsetX, offsetY, tileSize, tileSize);
 
@@ -49,7 +49,14 @@ var renderMap = function() {
 
   // draw prompts
   _.each(prompts, function(prompt){
-    prompt.draw(context);
+    context.save();
+    context.drawImage(prompt.images[0],
+                      eval(prompt.x),
+                      eval(prompt.y),
+                      eval(prompt.width),
+                      eval(prompt.height)
+                     );
+    context.restore();
   })
 }
 
