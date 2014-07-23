@@ -10,6 +10,7 @@ window.onload = window.onresize = function() {
     height: window.innerHeight || document.body.clientHeight
   }
 
+  // ipad resolution 0.75
   canvas.width = size.width;
   canvas.height = size.height;
 
@@ -17,9 +18,6 @@ window.onload = window.onresize = function() {
   offsetY = 20;
 
   tileSize = (canvas.height - 2*offsetY) / mapRows;
-
-  // ipad resolution 0.75
-  
 }
 
 var renderMap = function() {
@@ -28,27 +26,18 @@ var renderMap = function() {
   context.drawImage(bg, offsetX, offsetY, canvas.height-2*offsetY, canvas.height-2*offsetY);
   context.drawImage(fish, offsetX, offsetY, tileSize, tileSize);
 
-  // draw the orange cat
-  context.save();
-  context.translate(offsetX + orangeCat.col*tileSize + tileSize/2, 
-                    offsetY + orangeCat.row*tileSize + tileSize/2)
-  context.rotate(orangeCat.direction * Math.PI / 2)
-  context.drawImage(orangeCat.pic, 
-                    -tileSize/2, 
-                    -tileSize/2, 
-                    tileSize, tileSize)
-  context.restore();
-
-  // draw the purple cat
-  context.save();
-  context.translate(offsetX + purpleCat.col*tileSize + tileSize/2, 
-                    offsetY + purpleCat.row*tileSize + tileSize/2)
-  context.rotate(purpleCat.direction * Math.PI / 2)
-  context.drawImage(purpleCat.pic, 
-                    -tileSize/2, 
-                    -tileSize/2, 
-                    tileSize, tileSize)
-  context.restore();
+  // draw the cats
+  _.each(cats, function(cat){
+    context.save();
+    context.translate(offsetX + cat.col*tileSize + tileSize/2, 
+                      offsetY + cat.row*tileSize + tileSize/2)
+    context.rotate(cat.direction * Math.PI / 2)
+    context.drawImage(cat.pic, 
+                      -tileSize/2, 
+                      -tileSize/2, 
+                      tileSize, tileSize)
+    context.restore();
+  });
 
   // draw the poops
   _.each(obstacles, function(obstacle){

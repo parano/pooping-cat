@@ -44,12 +44,11 @@ var removeObstacle = function(px, py) {
   obstacles = _.reject(obstacles, function(o){
     return o.col === px && o.row === py;
   });
-
   map[py][px] = 0;
 }
 
-var map = [  //the 9x9 map - 1=not walkable, 0=empty space
-  [1, 0, 0, 0, 0, 0, 0, 0, 0],
+var map = [  //the 9x9 map - 1=Obstacle, 0=Empty, 2=Player
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -64,6 +63,4 @@ var map = [  //the 9x9 map - 1=not walkable, 0=empty space
 //var map = _.map(_.range(9), function(){ 
 //  return _.map(_.range(9), function(){ return 0;});
 //})
-
-
 

@@ -2,6 +2,7 @@ var Player = function(px,  py, direction, image){
   // position on the map
   this.col = px;
   this.row = py;
+  map[py][px] = 2;
 
   this.pic = new Image();
   this.pic.src = image;
@@ -30,25 +31,25 @@ var Player = function(px,  py, direction, image){
     switch(this.direction) {
       case 0: // up
         if(this.row > 0 && map[this.row-1][this.col] === 0 ) {
-          this.row -= 1;
+          this.moveUp();
         }
       break;
 
       case 1: // right
         if(this.col < mapCols-1 && map[this.row][this.col+1] === 0) {
-          this.col += 1;
+          this.moveRight();
         }
       break;
 
       case 2: // down
         if(this.row < mapRows-1 && map[this.row+1][this.col] === 0) {
-          this.row += 1;
+          this.moveDown();
         }
       break;
 
       case 3: // left
         if(this.col > 0 && map[this.row][this.col-1] === 0) {
-          this.col -= 1;
+          this.moveLeft();
         }
       break;
 
@@ -87,6 +88,30 @@ var Player = function(px,  py, direction, image){
       default:
         console.log("Error on Removing Obstacle !")
     }
+  }
+
+  this.moveUp = function(){
+    map[this.row][this.col] = 0;
+    this.row -= 1;
+    map[this.row][this.col] = 2;
+  }
+  
+  this.moveDown = function(){
+    map[this.row][this.col] = 0;
+    this.row += 1;
+    map[this.row][this.col] = 2;
+  }
+  
+  this.moveLeft = function(){
+    map[this.row][this.col] = 0;
+    this.col -= 1;
+    map[this.row][this.col] = 2;
+  }
+
+  this.moveRight = function(){
+    map[this.row][this.col] = 0;
+    this.col += 1;
+    map[this.row][this.col] = 2;
   }
 }
 
