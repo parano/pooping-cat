@@ -138,15 +138,15 @@ document.addEventListener("keydown", function(e){
 
     case 188: // press ,
       purplePrompt.prev();
-    break
+    break;
     
     case 190: // press .
       purplePrompt.combo();
-    break
+    break;
 
     case 191: // press ?
       purplePrompt.next();
-    break
+    break;
   }
 }, false);
 

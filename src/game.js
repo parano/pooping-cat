@@ -89,17 +89,17 @@ document.addEventListener("keydown", function(e){
       purpleCat.removeObstacle(map);
     break;
 
-    case 52: // press 4
+    case 188: // press ,
       purplePrompt.prev();
-    break
+    break;
     
-    case 53: // press 5
+    case 190: // press .
       purplePrompt.combo();
-    break
+    break;
 
-    case 54: // press 6
+    case 191: // press ?
       purplePrompt.next();
-    break
+    break;
   }
 }, false);
 
