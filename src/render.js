@@ -50,7 +50,7 @@ var renderMap = function() {
   // draw prompts
   _.each(prompts, function(prompt){
     context.save();
-    context.drawImage(prompt.images[0],
+    context.drawImage(prompt.images[prompt.cur()],
                       eval(prompt.x),
                       eval(prompt.y),
                       eval(prompt.width),

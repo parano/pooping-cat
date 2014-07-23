@@ -10,6 +10,34 @@ var Prompt = function(x, y, width, height, image_prefix) {
     return image;
   });
 
+  this.counter = 0; // 0 - 10
+
+  this.showCombo = false;
+
+  this.cur = function(){
+    if(this.showCombo) { // show combo card
+      return 7;
+    } else if(this.counter === 0) {
+      return 0; // draw 7 cards
+    } else if (this.counter % 2 === 0) {
+      return (this.counter/2) + 1; // review a card
+    } else {
+      return 1; // wait
+    }
+  };
+
+  this.next = function(){
+    this.showCombo = false;
+    this.counter = (this.counter + 1) % 12;
+  }
+
+  this.prev = function(){
+    this.counter = (this.counter + 11) % 12;
+  }
+
+  this.combo = function(){
+    this.showCombo = true;
+  }
   //this.texts = [
   //  "Go 1st Next Round",
   //  "Go 2nd Next Round",

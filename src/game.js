@@ -18,6 +18,13 @@ var orangeCat = new Player(mapCols-2,
                            "./assets/cat_orange.png");
 cats.push(orangeCat);
 
+var orangePrompt = new Prompt("0",
+                              "(canvas.height - offsetX*2)/2",
+                              "offsetX",
+                              "offsetX * 2",
+                              "./assets/prompts/orange/orange");
+prompts.push(orangePrompt);
+
 document.addEventListener("keydown", function(e){
   switch(e.keyCode){
     case 65: // press a
@@ -35,21 +42,34 @@ document.addEventListener("keydown", function(e){
     case 83: // press s
       orangeCat.removeObstacle(map);
     break;
+
+    case 49: // press 1
+      orangePrompt.prev();
+    break;
+    
+    case 50: // press 2
+      orangePrompt.combo();
+    break;
+    
+    case 51: // press 3
+      orangePrompt.next();
+    break;
   }
 }, false);
 
-var orangePrompt = new Prompt("0",
-                              "(canvas.height - offsetX*2)/2",
-                              "offsetX",
-                              "offsetX * 2",
-                              "./assets/prompts/orange/orange");
-prompts.push(orangePrompt);
 
 var purpleCat = new Player(mapCols-1, 
                            mapRows-2, 
                            LEFT, 
                            "./assets/cat_purple.png");
 cats.push(purpleCat);
+
+var purplePrompt = new Prompt("(canvas.height + offsetX)",
+                              "(canvas.height - offsetX*2)/2",
+                              "offsetX",
+                              "offsetX * 2",
+                              "./assets/prompts/purple/purple");
+prompts.push(purplePrompt);
 
 document.addEventListener("keydown", function(e){
   switch(e.keyCode){
@@ -68,15 +88,22 @@ document.addEventListener("keydown", function(e){
     case 40: // press down arrow
       purpleCat.removeObstacle(map);
     break;
+
+    case 52: // press 4
+      purplePrompt.prev();
+    break
+    
+    case 53: // press 5
+      purplePrompt.combo();
+    break
+
+    case 54: // press 6
+      purplePrompt.next();
+    break
   }
 }, false);
 
-var purplePrompt = new Prompt("(canvas.height + offsetX)",
-                              "(canvas.height - offsetX*2)/2",
-                              "offsetX",
-                              "offsetX * 2",
-                              "./assets/prompts/purple/purple");
-prompts.push(purplePrompt);
+
 
 //var purplePrompt = new Prompt(0,0,300,400);
 //prompts.push(purplePrompt);
