@@ -1,8 +1,4 @@
 // Two Player Mode
-
-var fish = new Image();
-fish.src = "./assets/fish.png";
-
 var bg = new Image();
 bg.src = "./assets/background.png";
 
@@ -10,6 +6,10 @@ bg.src = "./assets/background.png";
 var obstacles = [];
 var cats = [];
 var prompts = [];
+var flags = [];
+
+var fish = new Flag(0, 0, "./assets/fish.png")
+flags.push(fish);
 
 // create first player on the map
 var orangeCat = new Player(mapCols-2, 

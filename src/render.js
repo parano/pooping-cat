@@ -24,7 +24,13 @@ var renderMap = function() {
   // clear the canvas
   context.clearRect(0, 0, canvas.width, canvas.height);
   context.drawImage(bg, offsetX, offsetY, canvas.height-2*offsetY, canvas.height-2*offsetY);
-  context.drawImage(fish, offsetX, offsetY, tileSize, tileSize);
+
+  _.each(flags, function(flag) {
+    context.drawImage(flag.image, 
+                      offsetX + flag.col*tileSize, 
+                      offsetY + flag.row*tileSize, 
+                      tileSize, tileSize);
+  });
 
   // draw the cats
   _.each(cats, function(cat){

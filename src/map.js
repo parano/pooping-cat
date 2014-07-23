@@ -41,10 +41,12 @@ var addObstacle = function(px, py) {
 }
 
 var removeObstacle = function(px, py) {
-  obstacles = _.reject(obstacles, function(o){
-    return o.col === px && o.row === py;
-  });
-  map[py][px] = 0;
+  if(map[py][px] === 1){
+    obstacles = _.reject(obstacles, function(o){
+      return o.col === px && o.row === py;
+    });
+    map[py][px] = 0;
+  }
 }
 
 var map = [  //the 9x9 map - 1=Obstacle, 0=Empty, 2=Player, 3=win
@@ -64,3 +66,12 @@ var map = [  //the 9x9 map - 1=Obstacle, 0=Empty, 2=Player, 3=win
 //  return _.map(_.range(9), function(){ return 0;});
 //})
 
+var Flag = function(px, py, image) {
+  this.col = px;
+  this.row = py;
+
+  map[py][px] = 3;
+
+  this.image = new Image();
+  this.image.src = image;
+}
